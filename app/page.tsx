@@ -107,67 +107,70 @@ export default function Home() {
   }
 
   return (
-    <div className="container">
-      <div className="chat-container">
-        <div className="header">
-          <div className="header-content">
-            <div className="header-left">
-              <Image src="/aof.png" alt="AOF Logo" width={40} height={40} className="header-logo" />
+    <>
+      <div className="corner-logo">
+        <Image src="/aof.png" alt="AOF Logo" width={220} height={120} />
+      </div>
+      
+      <div className="container">
+        <div className="chat-container">
+          <div className="header">
+            <div className="header-content">
               <div>
                 <h1>🎓 Dommer-GPT</h1>
                 <p className="subtitle">Indsend din prompt for vurdering</p>
               </div>
+              <button onClick={handleNewChat} className="new-chat-button">
+                ✨ Ny chat
+              </button>
             </div>
-            <button onClick={handleNewChat} className="new-chat-button">
-              ✨ Ny chat
-            </button>
           </div>
-        </div>
 
-        <div className="messages">
-          {messages.length === 0 && (
-            <div className="welcome-message">
-              <p>👋 Velkommen til Dommer-GPT!</p>
-              <p>Indsend din prompt, så vil jeg vurdere den baseret på de teknikker, vi har gennemgået.</p>
-            </div>
-          )}
-          {messages.map((msg, idx) => (
-            <div key={idx} className={`message ${msg.role}`}>
-              <div className="message-content">
-                {msg.content.split('\n').map((line, i) => (
-                  <p key={i}>{line}</p>
-                ))}
+          <div className="messages">
+            {messages.length === 0 && (
+              <div className="welcome-message">
+                <p>👋 Velkommen til Dommer-GPT!</p>
+                <p>Indsend din prompt, så vil jeg vurdere den baseret på de teknikker, vi har gennemgået.</p>
               </div>
-            </div>
-          ))}
-          {isLoading && (
-            <div className="message assistant">
-              <div className="message-content loading">
-                Vurderer din prompt...
+            )}
+            {messages.map((msg, idx) => (
+              <div key={idx} className={`message ${msg.role}`}>
+                <div className="message-content">
+                  {msg.content.split('\n').map((line, i) => (
+                    <p key={i}>{line}</p>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            ))}
+            {isLoading && (
+              <div className="message assistant">
+                <div className="message-content loading">
+                  Vurderer din prompt...
+                </div>
+              </div>
+            )}
+          </div>
 
-        <form onSubmit={handleSubmit} className="input-form">
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Indsend din prompt her..."
-            className="chat-input"
-            rows={3}
-            disabled={isLoading}
-          />
-          <button 
-            type="submit" 
-            className="send-button"
-            disabled={isLoading || !input.trim()}
-          >
-            Send
-          </button>
-        </form>
+          <form onSubmit={handleSubmit} className="input-form">
+            <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Indsend din prompt her..."
+              className="chat-input"
+              rows={3}
+              disabled={isLoading}
+            />
+            <button 
+              type="submit" 
+              className="send-button"
+              disabled={isLoading || !input.trim()}
+            >
+              Send
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

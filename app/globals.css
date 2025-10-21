@@ -16,6 +16,18 @@ body {
   padding: 10px;
 }
 
+/* Corner Logo */
+.corner-logo {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  background: white;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
 .container {
   width: 100%;
   max-width: 1200px;
@@ -31,10 +43,6 @@ body {
 /* Logo Styles */
 .logo {
   margin-bottom: 20px;
-}
-
-.header-logo {
-  border-radius: 8px;
 }
 
 /* Code Gate Styles */
@@ -103,12 +111,6 @@ body {
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 15px;
 }
 
 .header h1 {
@@ -290,6 +292,16 @@ body {
     padding: 5px;
   }
 
+  .corner-logo {
+    top: 10px;
+    left: 10px;
+  }
+
+  .corner-logo img {
+    width: 120px !important;
+    height: auto !important;
+  }
+
   .code-gate,
   .header {
     padding: 20px;
@@ -306,10 +318,6 @@ body {
   .header-content {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .header-left {
-    width: 100%;
   }
 
   .new-chat-button {

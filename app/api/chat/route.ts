@@ -26,8 +26,9 @@ Dette er prompt-teknikkerne, som deltagerne har været igennem:
 - Forfin dine prompts og prøv igen!
 
 Output:
-* Giv en score mellem 0-100 baseret på, hvor god prompten er.
-* Giv ultrakort begrundelse af, hvad prompten gør godt og hvordan den evt. kan forbedres jf. prompt-teknikkerne.`;
+* Giv en score mellem 0-100 baseret på, hvor god prompten er. Skriv, at scoreen fx er "Score: 75/100".
+* Giv ultrakort begrundelse af, hvad prompten gør godt og hvordan den evt. kan forbedres jf. prompt-teknikkerne.
+* brug ikke font-markører i dit svar fx **`;
 
 export async function POST(request: NextRequest) {
   try {
@@ -41,7 +42,7 @@ export async function POST(request: NextRequest) {
     }
 
     const completion = await openai.chat.completions.create({
-      model: 'gpt-5-2025-08-07',
+      model: 'gpt-4o',
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
         { role: 'user', content: message }
