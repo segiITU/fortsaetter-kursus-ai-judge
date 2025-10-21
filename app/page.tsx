@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, FormEvent, KeyboardEvent } from 'react';
+import Image from 'next/image';
 
 export default function Home() {
   const [accessCode, setAccessCode] = useState('');
@@ -9,12 +10,26 @@ export default function Home() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleCodeSubmit = (e: FormEvent) => {
+  const handleCodeSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (accessCode.toLowerCase() === 'aof') {
-      setHasAccess(true);
-    } else {
-      alert('Forkert kode. Prøv igen.');
+    
+    try {
+      const response = await fetch('/api/verify-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: accessCode }),
+      });
+
+      const data = await response.json();
+      
+      if (data.valid) {
+        setHasAccess(true);
+      } else {
+        alert('Forkert kode. Prøv igen.');
+        setAccessCode('');
+      }
+    } catch (error) {
+      alert('Fejl ved validering af kode.');
     }
   };
 
@@ -56,10 +71,21 @@ export default function Home() {
     }
   };
 
+  const handleNewChat = () => {
+    if (messages.length > 0) {
+      const confirmed = window.confirm('Er du sikker på, at du vil starte en ny chat? Dette sletter den nuværende samtale.');
+      if (confirmed) {
+        setMessages([]);
+        setInput('');
+      }
+    }
+  };
+
   if (!hasAccess) {
     return (
       <div className="container">
         <div className="code-gate">
+          <Image src="/aof.png" alt="AOF Logo" width={80} height={80} className="logo" />
           <h1>🎓 Dommer-GPT</h1>
           <p>Indtast koden for at fortsætte</p>
           <form onSubmit={handleCodeSubmit}>
@@ -84,8 +110,18 @@ export default function Home() {
     <div className="container">
       <div className="chat-container">
         <div className="header">
-          <h1>🎓 Dommer-GPT</h1>
-          <p className="subtitle">Indsend din prompt for vurdering</p>
+          <div className="header-content">
+            <div className="header-left">
+              <Image src="/aof.png" alt="AOF Logo" width={40} height={40} className="header-logo" />
+              <div>
+                <h1>🎓 Dommer-GPT</h1>
+                <p className="subtitle">Indsend din prompt for vurdering</p>
+              </div>
+            </div>
+            <button onClick={handleNewChat} className="new-chat-button">
+              ✨ Ny chat
+            </button>
+          </div>
         </div>
 
         <div className="messages">
